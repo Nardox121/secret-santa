@@ -109,7 +109,11 @@ const useStyles = makeStyles({
     width: '100%',
     height: '100%',
     display: 'flex',
-    ...shorthands.padding('20px')
+    ...shorthands.padding('20px'),
+    ...shorthands.gap('10px'),
+    '@media (max-width:800px)': {
+      flexDirection: 'column'
+    }
   },
   controlContainer: {
     display: 'flex',
@@ -118,11 +122,15 @@ const useStyles = makeStyles({
   },
   participantContainer: {
     width: '70%',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     flexWrap: 'wrap',
-    ...shorthands.gap('10px')
+    ...shorthands.gap('10px'),
+    ...shorthands.overflow('auto'),
+    '@media (max-width:800px)': {
+      width: '100%',
+      flexWrap: 'nowrap',
+    }
   },
   addParticipantContainer: {
     display: 'flex',
@@ -145,9 +153,7 @@ const useStyles = makeStyles({
   manageRoomSection: {
     position: 'fixed',
     bottom: '20px',
-    right: '20px',
-    width: '250px',
-    height: '100px',
+    right: '20px'
   },
   manageRoomButton: {
     height: '50px',

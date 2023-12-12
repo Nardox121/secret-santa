@@ -34,6 +34,8 @@ const shuffleArray = (array: string[]) => {
   }
 }
 
+const isDev = process.env.NODE_ENV == 'development';
+
 const findDuplicates = (array: string[]) => array.filter((item, index) => array.indexOf(item) !== index);
 
 export default async function handler(
@@ -86,7 +88,7 @@ export default async function handler(
       return {
         id,
         name: x,
-        link: `${hostName}/${roomId}/${id}`,
+        link: `${isDev ? 'http' : 'https'}://${hostName}/${roomId}/${id}`,
         seenResult: false,
         pairing: pairingMap[x]
       }

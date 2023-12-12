@@ -1,11 +1,10 @@
 import { Loader } from "@/components/Loader";
-import { makeStyles, Text } from "@fluentui/react-components";
+import { makeStyles, shorthands, Text } from "@fluentui/react-components";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 export default function Reveal() {
   const router = useRouter();
-  console.log({ router });
   const styles = useStyles();
   const [name, setName] = useState<string | undefined>();
   const [error, setError] = useState<string | undefined>();
@@ -26,14 +25,12 @@ export default function Reveal() {
         body: JSON.stringify(body)
       });
 
-      console.log({ response });
-
       if (response.ok) {
         const json = await response.json();
         setName(json.pairing);
       } else {
         if (response.status === 409) {
-          setError('Your pairing has already been revealed!');
+          setError('Your assignment has already been revealed!');
         } else {
           setError('We couldn\'t find this page. Please check if the URL is a correct one.')
         }
@@ -46,15 +43,31 @@ export default function Reveal() {
     <div className={styles.container}>
       <Text
         className={styles.successTitle}
-        size={800}
+        size={700}
+        align="center"
       >
-        {`Your assignment is ${name}. Make sure to write it down!`}
+        Your assignment is:
+      </Text>
+      <Text
+        className={styles.successTitle}
+        size={900}
+        weight="semibold"
+        align="center"
+      >
+        {name}
+      </Text>
+      <Text
+        className={styles.successTitle}
+        size={600}
+        align="center"
+      >
+        Make sure to write it down!
       </Text>
     </div>
   ) : error !== undefined ? (
     <div className={styles.container}>
       <Text
-        className={styles.successTitle}
+        className={styles.errorTitle}
         size={800}
       >
         {error}
@@ -71,10 +84,15 @@ const useStyles = makeStyles({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
+    ...shorthands.padding('20px'),
+    ...shorthands.gap('5px'),
   },
   successTitle: {
-    marginBottom: '20px',
     color: '#FFFFFF'
   },
+  errorTitle: {
+    color: '#FFFFFF',
+    marginBottom: '20px'
+  }
 })

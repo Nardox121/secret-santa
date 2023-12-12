@@ -1,4 +1,4 @@
-import { makeStyles, Text } from "@fluentui/react-components";
+import { Link, makeStyles, shorthands, Text } from "@fluentui/react-components";
 import { ErrorCircle48Regular } from '@fluentui/react-icons';
 
 export interface CreateRoomResponse {
@@ -13,19 +13,29 @@ export const Result = (props: { roomResponse: CreateRoomResponse }) => {
     <div className={styles.container}>
       <Text
         className={styles.successTitle}
-        size={800}
+        size={700}
+        align="center"
       >
-        Congratulations! Send out personalized links for the reveal. Don&apos;t cheat - we will know!
+        Congratulations! Use links below to reveal your assignments. Don&apos;t cheat - we will know!
       </Text>
-      {Object.entries(props.roomResponse.data!).map(([name, link]) => (
-        <Text
-          key={name}
-          size={600}
-          className={styles.participant}
-        >
-          {`${name}: ${link}`}
-        </Text>
-      ))}
+      <div className={styles.scrollContainer}>
+        {Object.entries(props.roomResponse.data!).map(([name, link]) => (
+          <div key={name}>
+            <Text
+              size={700}
+              className={styles.participant}
+              weight="semibold"
+            >
+              {`${name}: `}
+            </Text>
+            <Link className={styles.link} appearance="subtle" href={link}>
+              <Text size={600}>
+                {link}
+              </Text>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   ) : (
     <div className={styles.container}>
@@ -42,20 +52,36 @@ export const Result = (props: { roomResponse: CreateRoomResponse }) => {
 
 const useStyles = makeStyles({
   container: {
+    position: 'relative',
     width: '100%',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    flexWrap: 'wrap'
+  },
+  scrollContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'start',
+    alignItems: 'center',
+    overflowY: 'auto',
   },
   successTitle: {
-    marginBottom: '20px',
+    marginBottom: '15px',
     color: '#FFFFFF'
   },
   participant: {
     color: '#FFFFFF'
+  },
+  link: {
+    color: '#FFFFFF',
+    textDecorationColor: '#FFFFFF',
+    ':hover': {
+      color: '#FFFFFF',
+    }
   },
   errorIcon: {
     color: 'white',

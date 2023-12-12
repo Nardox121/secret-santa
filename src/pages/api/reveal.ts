@@ -1,7 +1,6 @@
 import clientPromise from '@/lib/mongodb';
 import { MongoClient } from 'mongodb';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { generateGuid } from '@/lib/random';
 import { RoomDocument } from './create-room';
 
 interface Body {
@@ -68,8 +67,7 @@ export default async function handler(
       }
     }
 
-    const result = await roomCollection.updateOne(filter, updateDoc, options);
-    console.log({ result });
+    await roomCollection.updateOne(filter, updateDoc, options);
     res.status(200).json({ message: 'Ok', pairing: participant.pairing });
   }
   catch {

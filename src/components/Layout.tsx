@@ -54,7 +54,7 @@ const useStyles = makeStyles({
   main: {
     display: 'flex',
     flexDirection: 'column',
-    height: '100%',
+    height: 'calc(100% - 90px)',
     backgroundColor: '#EEACB2'
   }
 });
